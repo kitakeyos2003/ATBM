@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/*
+ *   Name: Hoang Huu Dung
+ *   Github: https://github.com/kitakeyos2003/ATBM.git
+*/
 public class Main {
     public static void main(String[] args) {
         byte[] data = null;
