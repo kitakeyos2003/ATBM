@@ -1,13 +1,13 @@
 package com.kitakeyos;
 
-import com.kitakeyos.encrypt.SubstitutionCipher;
+import com.kitakeyos.encrypt.ShiftCipher;
 import com.kitakeyos.interfaces.IReceiver;
 import com.kitakeyos.interfaces.ISender;
 import com.kitakeyos.util.Log;
 
 public class User implements ISender, IReceiver {
     private String name;
-    private SubstitutionCipher cipher;
+    private ShiftCipher cipher;
 
     public User(String name, int key) {
         this.name = name;
@@ -16,7 +16,7 @@ public class User implements ISender, IReceiver {
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 ' '};
-        this.cipher = new SubstitutionCipher(key, substitution);
+        this.cipher = new ShiftCipher(substitution.length, key, substitution);
     }
 
     @Override

@@ -4,61 +4,40 @@ import com.kitakeyos.interfaces.IDecode;
 import com.kitakeyos.interfaces.IEncode;
 
 public class SubstitutionCipher implements IDecode, IEncode {
-    private int key;
-    private char[] substitution;
-    private int substitutionSize;
+    private String alphabet;
+    private String cipherAlphabet;
 
-    public SubstitutionCipher(int key, char[] substitution) {
-        this.key = key;
-        this.substitution = substitution;
-        this.substitutionSize = substitution.length;
+    public SubstitutionCipher(String alphabet, String cipherAlphabet) {
+        this.alphabet = alphabet;
+        this.cipherAlphabet = cipherAlphabet;
     }
 
     @Override
-    public String decode(String code) {
-        StringBuilder decodedText = new StringBuilder();
-        for (int i = 0; i < code.length(); i++) {
-            char currentChar = code.charAt(i);
-            int index = getIndexFromSubstitution(currentChar);
-            int key = this.key % substitutionSize;
+    public String decode(String cipherText) {
+        StringBuilder plainText = new StringBuilder();
+        for (int i = 0; i < cipherText.length(); i++) {
+            int index = cipherAlphabet.indexOf(cipherText.charAt(i));
             if (index != -1) {
-                index = (index - key);
-                if (index < 0) {
-                    index += substitution.length;
-                }
-                decodedText.append(substitution[index]);
+                plainText.append(alphabet.charAt(index));
             } else {
-                decodedText.append(currentChar);
+                plainText.append(cipherText.charAt(i));
             }
         }
-
-        return decodedText.toString();
+        return plainText.toString();
     }
 
     @Override
     public String encode(String plainText) {
-        StringBuilder encodedText = new StringBuilder();
+        StringBuilder cipherText = new StringBuilder();
         for (int i = 0; i < plainText.length(); i++) {
-            char currentChar = plainText.charAt(i);
-            int index = getIndexFromSubstitution(currentChar);
+            int index = alphabet.indexOf(plainText.charAt(i));
             if (index != -1) {
-                index = (index + key) % substitutionSize;
-                encodedText.append(substitution[index]);
+                cipherText.append(cipherAlphabet.charAt(index));
             } else {
-                encodedText.append(currentChar);
+                cipherText.append(plainText.charAt(i));
             }
         }
-
-        return encodedText.toString();
-    }
-
-    private int getIndexFromSubstitution(char code) {
-        for (int i = 0; i < substitution.length; i++) {
-            if (substitution[i] == code) {
-                return i;
-            }
-        }
-        return -1;
+        return cipherText.toString();
     }
 }
 
